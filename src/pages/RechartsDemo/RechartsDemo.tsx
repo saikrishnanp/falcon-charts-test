@@ -9,13 +9,15 @@ import {
   Bar,
   XAxis,
   YAxis,
+  ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
 import users from "../../../data/users.json";
 import allocations from "../../../data/people_allocation.json";
 import engineerCategories from "../../../data/engineer_category.json";
 import workLocations from "../../../data/work_locations.json";
-import { countBy, COLORS } from "../utils";
+import stackedBarData from "../../../data/revenue_details.json";
+import { countBy, COLORS, STACK_COLORS } from "../utils";
 
 // Pie: User Privilege Distribution
 const privilegeData = Object.entries(countBy(users, "privilege")).map(
@@ -85,7 +87,7 @@ const RechartsDemo: React.FC = () => (
       <h3>Average Allocation % by Role</h3>
       <BarChart width={350} height={250} data={avgAllocByRole}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="role" stroke="#1976d2" />
+        <XAxis dataKey="role" stroke="#1976d2" style={{ fontSize: 14 }} />
         <YAxis />
         <Tooltip />
         <Legend />
@@ -142,6 +144,28 @@ const RechartsDemo: React.FC = () => (
         <Tooltip />
         <Legend />
       </PieChart>
+    </div>
+    <div>
+      <h3>Revenue Details</h3>
+      <ResponsiveContainer width={800} height={300}>
+      <BarChart
+        data={stackedBarData}
+        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="month" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="revenue" stackId="a" fill={STACK_COLORS[0]} name="Revenue($)" />
+        <Bar dataKey="activePO" stackId="a" fill={STACK_COLORS[1]} name="Active PO" />
+        <Bar dataKey="committed" stackId="a" fill={STACK_COLORS[2]} name="Committed" />
+        <Bar dataKey="bestCase" stackId="a" fill={STACK_COLORS[3]} name="Best Case" />
+        <Bar dataKey="qualified50" stackId="a" fill={STACK_COLORS[4]} name="Qualified Pipeline >= 50%" />
+        <Bar dataKey="qualifiedBelow50" stackId="a" fill={STACK_COLORS[5]} name="Qualified Pipeline < 50%" />
+        <Bar dataKey="other" stackId="a" fill={STACK_COLORS[6]} name="Other Pipeline" />
+      </BarChart>
+    </ResponsiveContainer>
     </div>
   </div>
 );

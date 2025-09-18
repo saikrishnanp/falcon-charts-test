@@ -4,7 +4,8 @@ import users from "../../../data/users.json";
 import allocations from "../../../data/people_allocation.json";
 import engineerCategories from "../../../data/engineer_category.json";
 import workLocations from "../../../data/work_locations.json";
-import { countBy } from "../utils";
+import stackedBarData from "../../../data/revenue_details.json";
+import { countBy, STACK_COLORS, stackedKeys } from "../utils";
 
 const privilegeData = Object.entries(countBy(users, "privilege")).map(
   ([id, value]) => ({ id, label: id, value })
@@ -62,6 +63,8 @@ export default function NivoDemo() {
       <div style={{ width: 350, height: 250 }}>
         <h3>Average Allocation % by Role</h3>
         <ResponsiveBar
+          enableGridX={false}
+          enableGridY={false}
           theme={{
             axis: {
               ticks: { text: { fill: "#1976d2" } }, // axis tick labels
@@ -117,6 +120,52 @@ export default function NivoDemo() {
           padAngle={0.7}
           cornerRadius={3}
           activeOuterRadiusOffset={8}
+        />
+      </div>
+      <div style={{ width: 650, height: 250 }}>
+        <h3>Revenue Details</h3>
+        <ResponsiveBar
+          data={stackedBarData}
+          keys={stackedKeys}
+          indexBy="month"
+          margin={{ top: 40, right: 120, bottom: 40, left: 60 }}
+          padding={0.2}
+          colors={STACK_COLORS}
+          enableLabel={false}
+          groupMode="stacked"
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Month",
+            legendPosition: "middle",
+            legendOffset: 32,
+          }}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: "Value",
+            legendPosition: "middle",
+            legendOffset: -55,
+          }}
+          enableGridX={false}
+          enableGridY={true}
+          legends={[
+            {
+              dataFrom: "keys",
+              anchor: "right", // Move legend to the right
+              direction: "column", // Vertical legend
+              justify: false,
+              translateX: 90,
+              itemsSpacing: 8,
+              itemWidth: 80, // Reduce if needed
+              itemHeight: 20,
+              itemDirection: "left-to-right",
+              symbolSize: 20,
+              symbolShape: "square",
+            },
+          ]}
         />
       </div>
     </div>

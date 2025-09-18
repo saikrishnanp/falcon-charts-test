@@ -19,3 +19,23 @@ export const designationLevels = [
   "Manager",
   "Director"
 ];
+
+export const STACK_COLORS = [
+  "#82b1ff", // Revenue ($)
+  "#69f0ae", // Active PO
+  "#ffe082", // Committed
+  "#ff8a80", // Best Case
+  "#80cbc4", // Qualified Pipeline >= 50%
+  "#b39ddb", // Qualified Pipeline < 50%
+  "#ffb74d", // Other Pipeline
+];
+
+export const stackedKeys = [
+  "revenue",
+  "activePO",
+  "committed",
+  "bestCase",
+  "qualified50",
+  "qualifiedBelow50",
+  "other",
+];

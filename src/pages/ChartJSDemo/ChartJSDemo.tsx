@@ -12,7 +12,8 @@ import users from "../../../data/users.json";
 import allocations from "../../../data/people_allocation.json";
 import engineerCategories from "../../../data/engineer_category.json";
 import workLocations from "../../../data/work_locations.json";
-import { countBy, COLORS } from "../utils";
+import stackedBarData from "../../../data/revenue_details.json";
+import { countBy, COLORS, STACK_COLORS, stackedKeys } from "../utils";
 
 ChartJS.register(
   ArcElement,
@@ -105,6 +106,53 @@ const locationData = {
   ],
 };
 
+// Stacked bar chart: Revenue Details
+const chartData = {
+  labels: stackedBarData.map(d => d.month),
+  datasets: stackedKeys.map((key, i) => ({
+    label: key === "revenue" ? "Revenue($)" :
+           key === "activePO" ? "Active PO" :
+           key === "committed" ? "Committed" :
+           key === "bestCase" ? "Best Case" :
+           key === "qualified50" ? "Qualified Pipeline >= 50%" :
+           key === "qualifiedBelow50" ? "Qualified Pipeline < 50%" :
+           "Other Pipeline",
+    data: stackedBarData.map(d => d[key as keyof typeof d] || 0),
+    backgroundColor: STACK_COLORS[i],
+    stack: "stack1",
+    borderWidth: 1,
+  })),
+};
+
+const chartOptions = {
+  plugins: {
+    legend: {
+      position: 'bottom' as const,
+      labels: {
+        color: "#1976d2",
+        font: { size: 12 },
+      },
+    },
+    tooltip: {
+      enabled: true,
+    },
+  },
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      stacked: true,
+      ticks: { color: "#1976d2" },
+      title: { display: true, text: "Month", color: "#1976d2" },
+    },
+    y: {
+      stacked: true,
+      ticks: { color: "#1976d2" },
+      title: { display: true, text: "Value", color: "#1976d2" },
+    },
+  },
+};
+
 export default function ChartJSDemo() {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 40 }}>
@@ -115,7 +163,7 @@ export default function ChartJSDemo() {
           options={{
             plugins: {
               legend: {
-                position: "bottom",
+                position: 'bottom' as const,
               },
             },
           }}
@@ -129,7 +177,7 @@ export default function ChartJSDemo() {
             indexAxis: "x",
             maintainAspectRatio: false,
             plugins: {
-              legend: { position: "bottom" },
+              legend: { position: 'bottom' as const },
             },
             scales: {
               x: {
@@ -165,7 +213,7 @@ export default function ChartJSDemo() {
             indexAxis: "x",
             maintainAspectRatio: false,
             plugins: {
-              legend: { position: "bottom", },
+              legend: { position: 'bottom' as const, },
             },
             scales: {
               x: {
@@ -193,6 +241,10 @@ export default function ChartJSDemo() {
           }}
         />
       </div>
+          <div style={{ width: 750, height: 250 }}>
+            <h3>Revenue details</h3>
+            <Bar data={chartData} options={chartOptions} />
+            </div>
     </div>
   );
 }

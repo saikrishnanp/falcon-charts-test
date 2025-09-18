@@ -1,0 +1,112 @@
+[
+  {
+    "month": "Apr",
+    "revenue": 1200000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  },
+  {
+    "month": "May",
+    "revenue": 1100000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  },
+  {
+    "month": "Jun",
+    "revenue": 1250000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  },
+  {
+    "month": "Jul",
+    "revenue": 1300000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  },
+  {
+    "month": "Sep",
+    "revenue": 0,
+    "activePO": 900000,
+    "committed": 34800,
+    "bestCase": 120000,
+    "qualified50": 50000,
+    "qualifiedBelow50": 30000,
+    "other": 15000
+  },
+  {
+    "month": "Oct",
+    "revenue": 0,
+    "activePO": 850000,
+    "committed": 40000,
+    "bestCase": 200000,
+    "qualified50": 60000,
+    "qualifiedBelow50": 35000,
+    "other": 20000
+  },
+  {
+    "month": "Nov",
+    "revenue": 0,
+    "activePO": 950000,
+    "committed": 37000,
+    "bestCase": 180000,
+    "qualified50": 55000,
+    "qualifiedBelow50": 32000,
+    "other": 18000
+  },
+  {
+    "month": "Dec",
+    "revenue": 0,
+    "activePO": 1200000,
+    "committed": 42000,
+    "bestCase": 250000,
+    "qualified50": 70000,
+    "qualifiedBelow50": 40000,
+    "other": 25000
+  },
+  {
+    "month": "Jan",
+    "revenue": 600000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  },
+  {
+    "month": "Feb",
+    "revenue": 550000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  },
+  {
+    "month": "Mar",
+    "revenue": 500000,
+    "activePO": 0,
+    "committed": 0,
+    "bestCase": 0,
+    "qualified50": 0,
+    "qualifiedBelow50": 0,
+    "other": 0
+  }
+]
