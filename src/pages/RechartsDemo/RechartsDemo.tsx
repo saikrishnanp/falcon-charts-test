@@ -7,6 +7,7 @@ import {
   Legend,
   BarChart,
   Bar,
+  Line,
   XAxis,
   YAxis,
   ResponsiveContainer,
@@ -17,7 +18,8 @@ import allocations from "../../../data/people_allocation.json";
 import engineerCategories from "../../../data/engineer_category.json";
 import workLocations from "../../../data/work_locations.json";
 import stackedBarData from "../../../data/revenue_details.json";
-import { countBy, COLORS, STACK_COLORS } from "../utils";
+import utilizationData from "../../../data/utilization_data.json";
+import { countBy, COLORS, STACK_COLORS, METRIC_COLORS } from "../utils";
 
 // Pie: User Privilege Distribution
 const privilegeData = Object.entries(countBy(users, "privilege")).map(
@@ -148,24 +150,137 @@ const RechartsDemo: React.FC = () => (
     <div>
       <h3>Revenue Details</h3>
       <ResponsiveContainer width={800} height={300}>
-      <BarChart
-        data={stackedBarData}
-        margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="revenue" stackId="a" fill={STACK_COLORS[0]} name="Revenue($)" />
-        <Bar dataKey="activePO" stackId="a" fill={STACK_COLORS[1]} name="Active PO" />
-        <Bar dataKey="committed" stackId="a" fill={STACK_COLORS[2]} name="Committed" />
-        <Bar dataKey="bestCase" stackId="a" fill={STACK_COLORS[3]} name="Best Case" />
-        <Bar dataKey="qualified50" stackId="a" fill={STACK_COLORS[4]} name="Qualified Pipeline >= 50%" />
-        <Bar dataKey="qualifiedBelow50" stackId="a" fill={STACK_COLORS[5]} name="Qualified Pipeline < 50%" />
-        <Bar dataKey="other" stackId="a" fill={STACK_COLORS[6]} name="Other Pipeline" />
-      </BarChart>
-    </ResponsiveContainer>
+        <BarChart
+          data={stackedBarData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar
+            dataKey="revenue"
+            stackId="a"
+            fill={STACK_COLORS[0]}
+            name="Revenue($)"
+          />
+          <Bar
+            dataKey="activePO"
+            stackId="a"
+            fill={STACK_COLORS[1]}
+            name="Active PO"
+          />
+          <Bar
+            dataKey="committed"
+            stackId="a"
+            fill={STACK_COLORS[2]}
+            name="Committed"
+          />
+          <Bar
+            dataKey="bestCase"
+            stackId="a"
+            fill={STACK_COLORS[3]}
+            name="Best Case"
+          />
+          <Bar
+            dataKey="qualified50"
+            stackId="a"
+            fill={STACK_COLORS[4]}
+            name="Qualified Pipeline >= 50%"
+          />
+          <Bar
+            dataKey="qualifiedBelow50"
+            stackId="a"
+            fill={STACK_COLORS[5]}
+            name="Qualified Pipeline < 50%"
+          />
+          <Bar
+            dataKey="other"
+            stackId="a"
+            fill={STACK_COLORS[6]}
+            name="Other Pipeline"
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+    <div>
+      <h3>Utilization Details</h3>
+      <ResponsiveContainer width={900} height={400}>
+        <BarChart
+          data={utilizationData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" />
+          <YAxis
+            yAxisId="left"
+            orientation="left"
+            tick={{ fill: "#1976d2" }}
+            label={{
+              value: "Sum of Utilization Revenue and Capacity",
+              angle: -90,
+              // offset: 100,
+              position: "insideBottomLeft",
+              fill: "#1976d2",
+            }}
+            tickFormatter={(value) => `${(value / 1000).toLocaleString()}k`}
+          />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ fill: "#FFD700" }}
+            label={{
+              value: "Utilization (%)",
+              angle: 90,
+              position: "insideRight",
+              fill: "#FFD700",
+            }}
+            domain={[0, 120]}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar
+            yAxisId="left"
+            dataKey="revenue"
+            fill={METRIC_COLORS.revenue}
+            name="Sum of Utilization Revenue"
+          />
+          <Bar
+            yAxisId="left"
+            dataKey="capacity"
+            fill={METRIC_COLORS.capacity}
+            name="Sum of Utilization Capacity"
+          />
+          <Line
+            yAxisId="right"
+            type="monotone"
+            dataKey="utilization"
+            stroke={METRIC_COLORS.utilization}
+            name="Utilization (%)"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            yAxisId="right"
+            type="linear"
+            dataKey="forecast"
+            stroke={METRIC_COLORS.forecast}
+            name="Utilization Forecast (%)"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            yAxisId="right"
+            type="monotone"
+            dataKey="avgUtilization"
+            stroke={METRIC_COLORS.avgUtilization}
+            name="Average Utilization (%)"
+            strokeWidth={2}
+            dot={false}
+          />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   </div>
 );

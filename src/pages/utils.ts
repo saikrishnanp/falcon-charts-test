@@ -39,3 +39,11 @@ export const stackedKeys = [
   "qualifiedBelow50",
   "other",
 ];
+
+export const METRIC_COLORS = {
+  revenue: "#82b1ff",
+  capacity: "#69f0ae",
+  utilization: "#ff8282ff",
+  forecast: "#616264ff",
+  avgUtilization: "#FFD700",
+};

@@ -1,0 +1,98 @@
+[
+  {
+    "month": "Apr",
+    "revenue": 628800,
+    "capacity": 958400,
+    "utilization": 65.6,
+    "forecast": 70.2,
+    "avgUtilization": 73.6
+  },
+  {
+    "month": "May",
+    "revenue": 600000,
+    "capacity": 950000,
+    "utilization": 66.1,
+    "forecast": 71.0,
+    "avgUtilization": 73.5
+  },
+  {
+    "month": "Jun",
+    "revenue": 610000,
+    "capacity": 960000,
+    "utilization": 67.2,
+    "forecast": 72.5,
+    "avgUtilization": 74.0
+  },
+  {
+    "month": "Jul",
+    "revenue": 620000,
+    "capacity": 970000,
+    "utilization": 68.0,
+    "forecast": 73.0,
+    "avgUtilization": 74.2
+  },
+  {
+    "month": "Aug",
+    "revenue": 615000,
+    "capacity": 965000,
+    "utilization": 67.5,
+    "forecast": 72.0,
+    "avgUtilization": 73.8
+  },
+  {
+    "month": "Sep",
+    "revenue": 630000,
+    "capacity": 980000,
+    "utilization": 69.0,
+    "forecast": 74.0,
+    "avgUtilization": 75.0
+  },
+  {
+    "month": "Oct",
+    "revenue": 640000,
+    "capacity": 990000,
+    "utilization": 70.2,
+    "forecast": 75.5,
+    "avgUtilization": 76.1
+  },
+  {
+    "month": "Nov",
+    "revenue": 625000,
+    "capacity": 975000,
+    "utilization": 68.8,
+    "forecast": 73.8,
+    "avgUtilization": 74.7
+  },
+  {
+    "month": "Dec",
+    "revenue": 610000,
+    "capacity": 960000,
+    "utilization": 66.5,
+    "forecast": 71.2,
+    "avgUtilization": 73.2
+  },
+  {
+    "month": "Jan",
+    "revenue": 600000,
+    "capacity": 950000,
+    "utilization": 65.0,
+    "forecast": 70.0,
+    "avgUtilization": 72.5
+  },
+  {
+    "month": "Feb",
+    "revenue": 605000,
+    "capacity": 955000,
+    "utilization": 65.8,
+    "forecast": 70.8,
+    "avgUtilization": 73.0
+  },
+  {
+    "month": "Mar",
+    "revenue": 610000,
+    "capacity": 960000,
+    "utilization": 66.2,
+    "forecast": 71.5,
+    "avgUtilization": 73.3
+  }
+]

@@ -1,10 +1,12 @@
-import { Pie, Bar, Doughnut } from "react-chartjs-2";
+import { Pie, Bar, Doughnut, Chart } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   ArcElement,
   Tooltip,
   Legend,
   CategoryScale,
+  LineElement,
+  PointElement,
   LinearScale,
   BarElement,
 } from "chart.js";
@@ -13,6 +15,7 @@ import allocations from "../../../data/people_allocation.json";
 import engineerCategories from "../../../data/engineer_category.json";
 import workLocations from "../../../data/work_locations.json";
 import stackedBarData from "../../../data/revenue_details.json";
+import utilizationData from "../../../data/utilization_data.json";
 import { countBy, COLORS, STACK_COLORS, stackedKeys } from "../utils";
 
 ChartJS.register(
@@ -21,7 +24,9 @@ ChartJS.register(
   Legend,
   CategoryScale,
   LinearScale,
-  BarElement
+  BarElement,
+  LineElement,
+  PointElement
 );
 
 // Pie: User Privilege Distribution
@@ -108,16 +113,23 @@ const locationData = {
 
 // Stacked bar chart: Revenue Details
 const chartData = {
-  labels: stackedBarData.map(d => d.month),
+  labels: stackedBarData.map((d) => d.month),
   datasets: stackedKeys.map((key, i) => ({
-    label: key === "revenue" ? "Revenue($)" :
-           key === "activePO" ? "Active PO" :
-           key === "committed" ? "Committed" :
-           key === "bestCase" ? "Best Case" :
-           key === "qualified50" ? "Qualified Pipeline >= 50%" :
-           key === "qualifiedBelow50" ? "Qualified Pipeline < 50%" :
-           "Other Pipeline",
-    data: stackedBarData.map(d => d[key as keyof typeof d] || 0),
+    label:
+      key === "revenue"
+        ? "Revenue($)"
+        : key === "activePO"
+        ? "Active PO"
+        : key === "committed"
+        ? "Committed"
+        : key === "bestCase"
+        ? "Best Case"
+        : key === "qualified50"
+        ? "Qualified Pipeline >= 50%"
+        : key === "qualifiedBelow50"
+        ? "Qualified Pipeline < 50%"
+        : "Other Pipeline",
+    data: stackedBarData.map((d) => d[key as keyof typeof d] || 0),
     backgroundColor: STACK_COLORS[i],
     stack: "stack1",
     borderWidth: 1,
@@ -127,7 +139,7 @@ const chartData = {
 const chartOptions = {
   plugins: {
     legend: {
-      position: 'bottom' as const,
+      position: "bottom" as const,
       labels: {
         color: "#1976d2",
         font: { size: 12 },
@@ -153,6 +165,64 @@ const chartOptions = {
   },
 };
 
+const utilizationChartData = {
+  labels: utilizationData.map((d) => d.month),
+  datasets: [
+    {
+      type: "bar" as const,
+      label: "Revenue",
+      data: utilizationData.map((d) => d.revenue),
+      backgroundColor: "#82b1ff",
+      yAxisID: "y",
+      order: 2,
+    },
+    {
+      type: "bar" as const,
+      label: "Capacity",
+      data: utilizationData.map((d) => d.capacity),
+      backgroundColor: "#69f0ae",
+      yAxisID: "y",
+      order: 2,
+    },
+    {
+      type: "line" as const,
+      label: "Utilization (%)",
+      data: utilizationData.map((d) => d.utilization),
+      borderColor: "#ffe082",
+      backgroundColor: "#ffe082",
+      yAxisID: "y1",
+      tension: 0.3,
+      fill: false,
+      pointRadius: 0,
+      order: 1,
+    },
+    {
+      type: "line" as const,
+      label: "Utilization Forecast (%)",
+      data: utilizationData.map((d) => d.forecast),
+      borderColor: "#ff8a80",
+      backgroundColor: "#ff8a80",
+      yAxisID: "y1",
+      tension: 0.3,
+      fill: false,
+      pointRadius: 0,
+      order: 1,
+    },
+    {
+      type: "line" as const,
+      label: "Average Utilization (%)",
+      data: utilizationData.map((d) => d.avgUtilization),
+      borderColor: "#FFD700",
+      backgroundColor: "#FFD700",
+      yAxisID: "y1",
+      tension: 0.3,
+      fill: false,
+      pointRadius: 0,
+      order: 1,
+    },
+  ],
+};
+
 export default function ChartJSDemo() {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 40 }}>
@@ -163,7 +233,7 @@ export default function ChartJSDemo() {
           options={{
             plugins: {
               legend: {
-                position: 'bottom' as const,
+                position: "bottom" as const,
               },
             },
           }}
@@ -177,7 +247,7 @@ export default function ChartJSDemo() {
             indexAxis: "x",
             maintainAspectRatio: false,
             plugins: {
-              legend: { position: 'bottom' as const },
+              legend: { position: "bottom" as const },
             },
             scales: {
               x: {
@@ -213,7 +283,7 @@ export default function ChartJSDemo() {
             indexAxis: "x",
             maintainAspectRatio: false,
             plugins: {
-              legend: { position: 'bottom' as const, },
+              legend: { position: "bottom" as const },
             },
             scales: {
               x: {
@@ -241,10 +311,66 @@ export default function ChartJSDemo() {
           }}
         />
       </div>
-          <div style={{ width: 750, height: 250 }}>
-            <h3>Revenue details</h3>
-            <Bar data={chartData} options={chartOptions} />
-            </div>
+      <div style={{ width: 750, height: 250 }}>
+        <h3>Revenue details</h3>
+        <Bar data={chartData} options={chartOptions} />
+      </div>
+      <div style={{ width: 900, height: 400, marginTop: 50 }}>
+        <h3>Utilization details</h3>
+        <Chart
+          type="bar"
+          data={utilizationChartData}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  color: "#1976d2",
+                  font: { size: 12 },
+                },
+              },
+              tooltip: {
+                enabled: true,
+              },
+            },
+            scales: {
+              x: {
+                ticks: { color: "#1976d2" },
+                title: { display: true, text: "Month", color: "#1976d2" },
+              },
+              y: {
+                type: "linear",
+                position: "left",
+                title: {
+                  display: true,
+                  text: "Sum of Utilization Revenue and Capacity",
+                  color: "#1976d2",
+                },
+                ticks: {
+                  color: "#1976d2",
+                  callback: (value) => `${Number(value) / 1000}k`,
+                },
+                grid: { color: "#eee" },
+              },
+              y1: {
+                type: "linear",
+                position: "right",
+                title: {
+                  display: true,
+                  text: "Utilization (%)",
+                  color: "#6200ffff",
+                },
+                min: 10,
+                max: 110,
+                ticks: { color: "#6200ffff" },
+                grid: { drawOnChartArea: false },
+              },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 }
