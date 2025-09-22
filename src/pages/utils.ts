@@ -47,3 +47,5 @@ export const METRIC_COLORS = {
   forecast: "#616264ff",
   avgUtilization: "#FFD700",
 };
+
+export const BUSINESS_UNITS = ["SCV", "D2T", "PES", "COM", "All"];

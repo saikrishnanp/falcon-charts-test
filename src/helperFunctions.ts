@@ -17,7 +17,7 @@ const getRandomPromotionCount = () => {
   return 4; // 5% get 4 promotions
 };
 
-const users = new Array(1000).fill(null).map((_, index) => {
+export const users = new Array(1000).fill(null).map((_, index) => {
   const name = uniqueNamesGenerator({
     dictionaries: [names],
     separator: " ",
@@ -61,7 +61,7 @@ const users = new Array(1000).fill(null).map((_, index) => {
 
 const userIds = users.map((user) => user.id);
 
-const allocations = new Array(1150).fill(null).map((_, index) => {
+export const allocations = new Array(1150).fill(null).map((_, index) => {
   return {
     id: uuidv4(),
     user_id: index < 1000 ? userIds[index] : userIds[index - 1000],
@@ -70,6 +70,7 @@ const allocations = new Array(1150).fill(null).map((_, index) => {
       .toISOString()
       .split("T")[0],
     allocation_percentage: ((index % 10) + 1) * 10,
+    business_unit: ["SCV", "PES", "D2T", "COM"][index % 3],
     billability: index % 2 === 0 ? "Billable" : "Non-Billable",
     billability_percentage: index % 2 === 0 ? ((index % 10) + 1) * 10 : 0,
     role: ["Developer", "Manager", "Designer", "QA"][index % 4],
