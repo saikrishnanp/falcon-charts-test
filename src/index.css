@@ -12,3 +12,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 } */
+
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'tailwindcss/base';
+
+h3 {
+  font-size: 1em;
+  font-weight: 600;
+}
